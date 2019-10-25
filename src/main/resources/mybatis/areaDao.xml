@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd//mybatis-3-mapper.dtd">
+<mapper namespace="com.digitalgd.data.dao.AreaDao">
+
+    <resultMap id="areaMap" type="AreaEntity" >
+        <id column="id" property="id"/>
+        <result column="name" property="name" />
+        <result column="fullname" property="fullname" />
+        <result column="shortname" property="shortname" />
+        <result column="code" property="code" />
+        <result column="lookup" property="lookup" />
+        <result column="parent" property="parent" />
+        <result column="ancestors" property="ancestors" />
+        <result column="depth" property="depth" />
+        <result column="category" property="category" />
+        <result column="status" property="status" />
+        <result column="ordered" property="ordered" />
+        <result column="remarks" property="remarks" />
+        <result column="deleted" property="deleted" />
+        <result column="createdBy" property="created_by" />
+        <result column="createdAt" property="created_at" />
+        <result column="lastModifiedBy" property="last_modified_by" />
+        <result column="lastModifiedAt" property="last_modified_at" />
+        <result column="version" property="version" />
+    </resultMap>
+
+    <insert id="insertArea" parameterType="AreaEntity" >
+        insert into area(id,name,fullname,shortname,code,lookup,parent,ancestors,depth,category,status,ordered,remarks,deleted,
+        created_by,created_at,last_modified_by,last_modified_at,version) values
+        (#{id},#{name},#{fullname},#{shortname},#{code},#{lookup},#{parent},#{ancestors},#{depth},#{category},#{status},#{ordered},#{remarks},#{deleted},
+        #{createdBy},#{createdAt},#{lastModifiedBy},#{lastModifiedAt},#{version})
+    </insert>
+
+    <update id="updateArea" parameterType="AreaEntity" >
+        UPDATE area SET
+        <if test="#{name}!=null">name=#{name},</if>
+        <if test="#{fullname}!=null">fullname=#{fullname},</if>
+        <if test="#{shortname}!=null">shortname=#{shortname},</if>
+        <if test="#{code}!=null">code=#{code},</if>
+        <if test="#{lookup}!=null">lookup=#{lookup},</if>
+        <if test="#{parent}!=null">parent=#{parent},</if>
+        <if test="#{ancestors}!=null">ancestors=#{ancestors},</if>
+        <if test="#{depth}!=null">depth=#{depth},</if>
+        <if test="#{category}!=null">category=#{category},</if>
+        <if test="#{status}!=null">status=#{status},</if>
+        <if test="#{ordered}!=null">ordered=#{ordered},</if>
+        <if test="#{remarks}!=null">remarks=#{remarks},</if>
+        <if test="#{deleted}!=null">deleted=#{deleted},</if>
+        <if test="#{createdBy}!=null">created_by=#{createdBy},</if>
+        <if test="#{createdAt}!=null">created_at=#{createdAt},</if>
+        last_modified_by=#{lastModifiedBy},
+        last_modified_at=#{lastModifiedAt},
+        version=#{version}
+        WHERE id=#{id};
+    </update>
+
+    <select id="selectAreaById" parameterType="string" resultMap="areaMap">
+        SELECT id,name,fullname,shortname,code,lookup,parent,ancestors,depth,category,status,ordered,remarks,deleted,
+        created_by,created_at,last_modified_by,last_modified_at,version
+        FROM area
+        WHERE id = #{id};
+    </select>
+
+    <select id="selectAreaByName" parameterType="string" resultMap="areaMap">
+        SELECT id,name,fullname,shortname,code,lookup,parent,ancestors,depth,category,status,ordered,remarks,deleted,
+        created_by,created_at,last_modified_by,last_modified_at,version
+        FROM area
+        WHERE name = #{name} and deleted=0;
+    </select>
+
+    <select id="selectAreaByFullName" parameterType="string" resultMap="areaMap">
+        SELECT id,name,fullname,shortname,code,lookup,parent,ancestors,depth,category,status,ordered,remarks,deleted,
+        created_by,created_at,last_modified_by,last_modified_at,version
+        FROM area
+        WHERE fullname = #{fullname} and deleted = 0;
+    </select>
+
+    <select id="selectAreaByLookup" parameterType="string" resultMap="areaMap">
+        SELECT id,name,fullname,shortname,code,lookup,parent,ancestors,depth,category,status,ordered,remarks,deleted,
+        created_by,created_at,last_modified_by,last_modified_at,version
+        FROM area
+        WHERE lookup = #{lookup};
+    </select>
+
+    <select id="selectAreaByCode" parameterType="string" resultMap="areaMap">
+        SELECT id,name,fullname,shortname,code,lookup,parent,ancestors,depth,category,status,ordered,remarks,deleted,
+        created_by,created_at,last_modified_by,last_modified_at,version
+        FROM area
+        WHERE code = #{code} and deleted=0;
+    </select>
+
+    <select id="selectAncestorsAreaByCode" parameterType="string" resultType="String">
+        SELECT ancestors FROM area WHERE code = #{code} and deleted = 0;
+    </select>
+
+    <select id="selectParentAreaByCode" parameterType="string" resultType="String">
+        SELECT parent FROM area WHERE code = #{code} and deleted=0;
+    </select>
+
+    <select id="selectAreaByParents" resultMap="areaMap">
+        SELECT id,name,fullname,shortname,code,lookup,parent,ancestors,depth,category,status,ordered,remarks,deleted,
+        created_by,created_at,last_modified_by,last_modified_at,version
+        FROM area where parent=#{parent} and deleted=0;
+    </select>
+
+    <select id="selectArea" resultMap="areaMap">
+        SELECT id,name,fullname,shortname,code,lookup,parent,ancestors,depth,category,status,ordered,remarks,deleted,
+        created_by,created_at,last_modified_by,last_modified_at,version
+        FROM area where deleted=0
+        <if test="name!=null">and name=#{name}</if>
+        <if test="fullname!=null">and fullname=#{fullname}</if>
+        <if test="code!=null">and code=#{code}</if>
+        <if test="lookup!=null">and lookup=#{lookup}</if>
+        <if test="parent!=null">and parent=#{parent}</if>
+    </select>
+
+    <select id="selectAll" resultMap="areaMap">
+        SELECT id,name,fullname,shortname,code,lookup,parent,ancestors,depth,category,status,ordered,remarks,deleted,
+        created_by,created_at,last_modified_by,last_modified_at,version
+        FROM area where deleted=0;
+    </select>
+
+</mapper>
