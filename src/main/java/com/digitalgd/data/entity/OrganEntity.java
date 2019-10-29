@@ -205,20 +205,12 @@ public class OrganEntity {
     }
 
     public boolean isEmpty(OrganEntity organEntity) {
-        if( StringUtils.isBlank(organEntity.getId()) )
+        if( StringUtils.isBlank(organEntity.getId()) && StringUtils.isBlank(organEntity.getName()) &&
+                StringUtils.isBlank(organEntity.getFullname()) && organEntity.getAreaCode() == null &&
+                StringUtils.isBlank(organEntity.getCode()) && StringUtils.isBlank(organEntity.getParent()) &&
+                organEntity.getCategory() == 0)
             return true;
-        if( StringUtils.isBlank(organEntity.getName()) )
-            return true;
-        if( StringUtils.isBlank(organEntity.getFullname()) )
-            return true;
-        if( organEntity.getAreaCode() == null )
-            return true;
-        if( StringUtils.isBlank(organEntity.getCode()) )
-            return true;
-        if( StringUtils.isBlank(organEntity.getParent()) )
-            return true;
-        if( organEntity.getCategory() == 0 )
-            return true;
+
         return false;
     }
 }

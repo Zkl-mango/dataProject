@@ -217,21 +217,10 @@ public class AreaEntity {
     }
 
     public boolean isEmpty(AreaEntity areaEntity) {
-        if( StringUtils.isBlank(areaEntity.getId()) )
-            return true;
-        if( StringUtils.isBlank(areaEntity.getName()) )
-            return true;
-        if( StringUtils.isBlank(areaEntity.getFullname()) )
-            return true;
-        if( StringUtils.isBlank(areaEntity.getShortname()) )
-            return true;
-        if( StringUtils.isBlank(areaEntity.getCode()) )
-            return true;
-        if( StringUtils.isBlank(areaEntity.getLookup()) )
-            return true;
-        if( StringUtils.isBlank(areaEntity.getParent()) )
-            return true;
-        if( areaEntity.getCategory() == 0 )
+        if( StringUtils.isBlank(areaEntity.getId()) && StringUtils.isBlank(areaEntity.getName()) &&
+                StringUtils.isBlank(areaEntity.getFullname()) && StringUtils.isBlank(areaEntity.getShortname()) &&
+                StringUtils.isBlank(areaEntity.getCode()) && StringUtils.isBlank(areaEntity.getLookup()) &&
+                StringUtils.isBlank(areaEntity.getParent()) && areaEntity.getCategory() == 0 )
             return true;
         return false;
     }
