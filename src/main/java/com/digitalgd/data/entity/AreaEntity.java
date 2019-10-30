@@ -6,13 +6,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.type.Alias;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
 @Alias(value = "AreaEntity")
 @TableName("area")
-public class AreaEntity {
+public class AreaEntity implements Serializable {
 
     @TableId
     private String id;

@@ -1,12 +1,12 @@
 package com.digitalgd.data.service;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.digitalgd.data.dto.AreaDto;
 import com.digitalgd.data.entity.AreaEntity;
 
-import java.awt.geom.Area;
 import java.util.List;
-import java.util.Map;
 
 public interface AreaService {
 
@@ -46,6 +46,6 @@ public interface AreaService {
 
     public List<AreaEntity> getAll();
 
-    public List<AreaEntity> getArea(AreaDto areaDto);
+    public IPage<AreaEntity> getArea(Page<AreaEntity> page, AreaDto areaDto);
 
 }

@@ -1,5 +1,7 @@
 package com.digitalgd.data.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.digitalgd.data.dto.OrgansParamDto;
 import com.digitalgd.data.entity.OrganEntity;
 
@@ -27,5 +29,5 @@ public interface OrganService {
 
     public List<OrganEntity> getOrganListByArea(String areaName);
 
-    public List<OrganEntity> getOrgan(OrgansParamDto organsParamDto);
+    public IPage<OrganEntity> getOrgan(Page<OrganEntity> page, OrgansParamDto organsParamDto);
 }

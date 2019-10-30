@@ -1,6 +1,9 @@
 package com.digitalgd.data.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.digitalgd.data.dto.AreaDto;
+import com.digitalgd.data.dto.PageInfo;
 import com.digitalgd.data.entity.AreaEntity;
 import com.digitalgd.data.exceptions.ListNotFoundException;
 import com.digitalgd.data.service.AreaService;
@@ -63,7 +66,7 @@ public class AreaControlller {
     }
 
     @GetMapping("areas")
-    public ResponseEntity<List<AreaEntity>> getAreas(AreaDto areaDto) {
+    public ResponseEntity<IPage<AreaEntity>> getAreas(AreaDto areaDto, PageInfo pageInfo) {
 //        Map<String,Object> res = new HashMap<String, Object>();
 //        if( areaDto.getCode() == null && areaDto.getFullname() ==null&&areaDto.getId()==null
 //        &&areaDto.getLookup()==null&&areaDto.getName()==null) {
@@ -77,16 +80,10 @@ public class AreaControlller {
 //        res.put(constantUtil.status,constantUtil.succesStatus);
 //        res.put("area",area);
 //        return ResponseEntity.status(HttpStatus.OK).body(res);
-
-        if( StringUtils.isBlank(areaDto.getCode()) && StringUtils.isBlank(areaDto.getFullname())
-                && StringUtils.isBlank(areaDto.getName()) && StringUtils.isBlank(areaDto.getLookup())
-                && StringUtils.isBlank(areaDto.getParent()) ) {
-            throw new IllegalArgumentException("illegal parameter");
-        }
-        List<AreaEntity> areas = areaService.getArea(areaDto);
-        if(CollectionUtils.isEmpty(areas)) {
-            throw new ListNotFoundException(String.format("list not found"));
-        }
+        Page<AreaEntity> page = new Page<>();
+        page.setSize(pageInfo.getPageSize());
+        page.setCurrent(pageInfo.getCurrent());
+        IPage<AreaEntity> areas = areaService.getArea(page,areaDto);
         return ResponseEntity.status(HttpStatus.OK).body(areas);
     }
 

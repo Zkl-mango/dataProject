@@ -1,19 +1,18 @@
 package com.digitalgd.data.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.digitalgd.data.dao.AreaDao;
 import com.digitalgd.data.dto.AreaDto;
 import com.digitalgd.data.entity.AreaEntity;
 import com.digitalgd.data.service.AreaService;
-import com.digitalgd.data.util.constantUtil;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 import com.digitalgd.data.exceptions.EntityNotFoundException;
 
 @Service
@@ -27,10 +26,12 @@ public class AreaServiceImpl implements AreaService {
         //查找父节点的祖先节点
         String ancestor = areaDao.selectAncestorsAreaByCode(areaEntity.getParent());
         String res;
-        if(ancestor==null||ancestor.equals(""))
+        if( StringUtils.isBlank(ancestor) ) {
             res = areaEntity.getParent();
-        else
+        }
+        else {
             res = ancestor+","+areaEntity.getParent();
+        }
         String[] s = res.split(",");
         areaEntity.setAncestors(res);
         areaEntity.setDepth(s.length);
@@ -125,8 +126,8 @@ public class AreaServiceImpl implements AreaService {
     }
 
     @Override
-    public List<AreaEntity> getArea(AreaDto areaDto) {
-        return areaDao.selectArea(areaDto);
+    public IPage<AreaEntity> getArea(Page<AreaEntity> page, AreaDto areaDto) {
+        return areaDao.selectArea(page,areaDto);
     }
 
 

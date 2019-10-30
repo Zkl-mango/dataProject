@@ -1,6 +1,10 @@
 package com.digitalgd.data.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.digitalgd.data.dto.OrgansParamDto;
+import com.digitalgd.data.dto.PageInfo;
+import com.digitalgd.data.entity.AreaEntity;
 import com.digitalgd.data.entity.OrganEntity;
 import com.digitalgd.data.exceptions.EntityNotFoundException;
 import com.digitalgd.data.exceptions.ListNotFoundException;
@@ -65,16 +69,11 @@ public class OrganController {
     }
 
     @GetMapping ("organs")
-    public ResponseEntity<List<OrganEntity>> getOrgans(OrgansParamDto organsParamDto) {
-        if( StringUtils.isBlank(organsParamDto.getParent()) && StringUtils.isBlank(organsParamDto.getName())
-            && StringUtils.isBlank(organsParamDto.getFullname()) && StringUtils.isBlank(organsParamDto.getCode())
-            && StringUtils.isBlank(organsParamDto.getAreasName()) )  {
-            throw new IllegalArgumentException("illegal parameter");
-        }
-        List<OrganEntity> organs = organService.getOrgan(organsParamDto);
-        if(CollectionUtils.isEmpty(organs)) {
-            throw new ListNotFoundException("list not found");
-        }
+    public ResponseEntity<IPage<OrganEntity>> getOrgans(OrgansParamDto organsParamDto, PageInfo pageInfo) {
+        Page<OrganEntity> page = new Page<>();
+        page.setSize(pageInfo.getPageSize());
+        page.setCurrent(pageInfo.getCurrent());
+        IPage<OrganEntity> organs = organService.getOrgan(page,organsParamDto);
         return ResponseEntity.status(HttpStatus.OK).body(organs);
     }
 }

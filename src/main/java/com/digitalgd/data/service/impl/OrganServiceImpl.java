@@ -1,5 +1,7 @@
 package com.digitalgd.data.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.digitalgd.data.dao.AreaDao;
 import com.digitalgd.data.dao.OrganDao;
 import com.digitalgd.data.dto.OrgansParamDto;
@@ -31,10 +33,12 @@ public class OrganServiceImpl implements OrganService {
         //查找父节点的祖先节点
         String ancestor = areaDao.selectAncestorsAreaByCode(organEntity.getParent());
         String res;
-        if(ancestor==null||ancestor.equals(""))
+        if( StringUtils.isBlank(ancestor) ) {
             res = organEntity.getParent();
-        else
+        }
+        else {
             res = ancestor+","+organEntity.getParent();
+        }
         String[] s = res.split(",");
         organEntity.setAncestors(res);
         organEntity.setDepth(s.length);
@@ -120,7 +124,7 @@ public class OrganServiceImpl implements OrganService {
     }
 
     @Override
-    public List<OrganEntity> getOrgan(OrgansParamDto organsParamDto) {
+    public IPage<OrganEntity> getOrgan(Page<OrganEntity> page, OrgansParamDto organsParamDto) {
         if( !StringUtils.isBlank(organsParamDto.getAreasName()) ) {
             AreaEntity area = areaDao.selectAreaByName(organsParamDto.getAreasName());
             if(area==null) {
@@ -136,6 +140,6 @@ public class OrganServiceImpl implements OrganService {
             }
             organsParamDto.setParent(organEntity.getCode());
         }
-        return organDao.selectOrgan(organsParamDto);
+        return organDao.selectOrgan(page,organsParamDto);
     }
 }

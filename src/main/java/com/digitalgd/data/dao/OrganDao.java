@@ -1,5 +1,7 @@
 package com.digitalgd.data.dao;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.digitalgd.data.dto.OrgansParamDto;
 import com.digitalgd.data.entity.OrganEntity;
 import org.apache.ibatis.annotations.Mapper;
@@ -25,6 +27,6 @@ public interface OrganDao {
 
     public List<OrganEntity> selectOrganListByArea(String areaCode);
 
-    public List<OrganEntity> selectOrgan(OrgansParamDto organsParamDto);
+    public IPage<OrganEntity> selectOrgan(Page<OrganEntity> page, OrgansParamDto organsParamDto);
 
 }

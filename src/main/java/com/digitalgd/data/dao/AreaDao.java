@@ -1,11 +1,12 @@
 package com.digitalgd.data.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.digitalgd.data.dto.AreaDto;
 import com.digitalgd.data.entity.AreaEntity;
 import org.apache.ibatis.annotations.Mapper;
 
-import java.awt.geom.Area;
 import java.util.List;
 
 @Mapper
@@ -63,5 +64,5 @@ public interface AreaDao extends BaseMapper<AreaEntity> {
 
     public List<AreaEntity> selectAll();
 
-    public List<AreaEntity> selectArea(AreaDto areaDto);
+    IPage<AreaEntity> selectArea(Page page, AreaDto areaDto);
 }

@@ -50,6 +50,7 @@ public class AreaDto implements Serializable {
         this.parent = parent;
     }
 
+
     @Override
     public String toString() {
         return "AreaDto{" +

@@ -5,12 +5,13 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.type.Alias;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Alias(value = "organEntity")
 @TableName("organ")
-public class OrganEntity {
+public class OrganEntity implements Serializable {
 
     @TableId
     private String id;

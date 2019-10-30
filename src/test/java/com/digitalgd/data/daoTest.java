@@ -63,6 +63,6 @@ public class daoTest {
 //        }
         AreaDto areaDto = new AreaDto();
         areaDto.setName("广东省");
-        System.out.println(areaDao.selectArea(areaDto).toString());
+//        System.out.println(areaDao.selectArea(areaDto).toString());
     }
 }
