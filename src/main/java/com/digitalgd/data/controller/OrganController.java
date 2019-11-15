@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@CrossOrigin
 @Log4j
 public class OrganController {
 
@@ -30,7 +31,7 @@ public class OrganController {
     OrganService organService;
 
     @PostMapping("organs")
-    public ResponseEntity<Void> addOrgan(OrganEntity organEntity) {
+    public ResponseEntity<Void> addOrgan(@RequestBody OrganEntity organEntity) {
         if( organEntity.isEmpty(organEntity) ) {
             throw new IllegalArgumentException("illegal parameter");
         }
@@ -39,7 +40,7 @@ public class OrganController {
     }
 
     @PutMapping("organs")
-    public ResponseEntity<Void> updateOrgan(OrganEntity organEntity) {
+    public ResponseEntity<Void> updateOrgan(@RequestBody OrganEntity organEntity) {
         if( organEntity.isEmpty(organEntity) ) {
             throw new IllegalArgumentException("illegal parameter");
         }
@@ -69,7 +70,7 @@ public class OrganController {
     }
 
     @GetMapping ("organs")
-    public ResponseEntity<IPage<OrganEntity>> getOrgans(OrgansParamDto organsParamDto, PageInfo pageInfo) {
+    public ResponseEntity<IPage<OrganEntity>> getOrgansByIPage(OrgansParamDto organsParamDto, PageInfo pageInfo) {
         Page<OrganEntity> page = new Page<>();
         page.setSize(pageInfo.getPageSize());
         page.setCurrent(pageInfo.getCurrent());

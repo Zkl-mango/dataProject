@@ -103,7 +103,6 @@
         <if test="organsParamDto.code!=null">and code=#{organsParamDto.code}</if>
         <if test="organsParamDto.parent!=null">and parent=#{organsParamDto.parent}</if>
         <if test="organsParamDto.areaCode!=null">and area_code=#{organsParamDto.areaCode}</if>
-        ;
     </select>
 
 </mapper>

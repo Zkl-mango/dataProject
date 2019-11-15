@@ -19,13 +19,14 @@ import java.util.List;
 import com.digitalgd.data.exceptions.EntityNotFoundException;
 
 @RestController
+@CrossOrigin
 public class AreaControlller {
 
     @Resource
     AreaService areaService;
 
     @PostMapping("areas")
-    public ResponseEntity<Void> addArea(AreaEntity areaEntity) {
+    public ResponseEntity<Void> addArea(@RequestBody AreaEntity areaEntity) {
         if( areaEntity.isEmpty(areaEntity) ) {
             throw new IllegalArgumentException("illegal parameter");
         }
@@ -34,7 +35,7 @@ public class AreaControlller {
     }
 
     @PutMapping("areas")
-    public ResponseEntity<Void> updateArea(AreaEntity areaEntity) {
+    public ResponseEntity<Void> updateArea(@RequestBody AreaEntity areaEntity) {
         if( areaEntity.isEmpty(areaEntity) ) {
             throw new IllegalArgumentException("illegal parameter");
         }
@@ -67,20 +68,11 @@ public class AreaControlller {
 
     @GetMapping("areas")
     public ResponseEntity<IPage<AreaEntity>> getAreas(AreaDto areaDto, PageInfo pageInfo) {
-//        Map<String,Object> res = new HashMap<String, Object>();
-//        if( areaDto.getCode() == null && areaDto.getFullname() ==null&&areaDto.getId()==null
-//        &&areaDto.getLookup()==null&&areaDto.getName()==null) {
-//            res.put(constantUtil.status,constantUtil.failStatus);
-//            return ResponseEntity.status(HttpStatus.OK).body(res);
-//        }
-//        AreaEntity area = areaService.getArea(areaDto);
-//        if(area==null) {
-//            return ResponseEntity.status(HttpStatus.OK).body(null);
-//        }
-//        res.put(constantUtil.status,constantUtil.succesStatus);
-//        res.put("area",area);
-//        return ResponseEntity.status(HttpStatus.OK).body(res);
         Page<AreaEntity> page = new Page<>();
+        if( pageInfo.getCurrent()==0 ) {
+            pageInfo.setCurrent(1);
+            pageInfo.setPageSize(20);
+        }
         page.setSize(pageInfo.getPageSize());
         page.setCurrent(pageInfo.getCurrent());
         IPage<AreaEntity> areas = areaService.getArea(page,areaDto);

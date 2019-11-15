@@ -2,6 +2,7 @@ package com.digitalgd.data.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.type.Alias;
 
@@ -28,8 +29,10 @@ public class OrganEntity implements Serializable {
     private String remarks;
     private int deleted;
     private String createdBy;
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
     private Date createdAt;
     private String lastModifiedBy;
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
     private Date lastModifiedAt;
     private int version;
 

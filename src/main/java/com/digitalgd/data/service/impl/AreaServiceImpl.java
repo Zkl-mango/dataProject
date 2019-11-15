@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import com.digitalgd.data.exceptions.EntityNotFoundException;
 
@@ -33,6 +34,7 @@ public class AreaServiceImpl implements AreaService {
             res = ancestor+","+areaEntity.getParent();
         }
         String[] s = res.split(",");
+        areaEntity.setId(UUID.randomUUID().toString());
         areaEntity.setAncestors(res);
         areaEntity.setDepth(s.length);
         areaEntity.setVersion(1);
@@ -71,7 +73,7 @@ public class AreaServiceImpl implements AreaService {
 
     @Override
     public AreaEntity getAreaById(String id) {
-        AreaEntity area = areaDao.selectAreaByName(id);
+        AreaEntity area = areaDao.selectAreaById(id);
         return area;
     }
 
@@ -127,6 +129,8 @@ public class AreaServiceImpl implements AreaService {
 
     @Override
     public IPage<AreaEntity> getArea(Page<AreaEntity> page, AreaDto areaDto) {
+        if(StringUtils.isBlank(areaDto.getName()))
+            areaDto.setName(null);
         return areaDao.selectArea(page,areaDto);
     }
 

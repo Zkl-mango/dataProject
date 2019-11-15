@@ -15,10 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class OrganServiceImpl implements OrganService {
@@ -47,6 +44,7 @@ public class OrganServiceImpl implements OrganService {
         organEntity.setStatus(1);
         organEntity.setCreatedAt(new Date());
         organEntity.setCreatedBy(null);
+        organEntity.setId(UUID.randomUUID().toString());
         organDao.insertOrgan(organEntity);
     }
 
