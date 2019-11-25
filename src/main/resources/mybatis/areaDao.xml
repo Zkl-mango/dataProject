@@ -101,24 +101,30 @@
     <select id="selectAreaByParents" resultMap="areaMap">
         SELECT id,name,fullname,shortname,code,lookup,parent,ancestors,depth,category,status,ordered,remarks,deleted,
         created_by,created_at,last_modified_by,last_modified_at,version
-        FROM area where parent=#{parent} and deleted=0;
+        FROM area where parent=#{parent} and deleted=0  ORDER BY ordered;
     </select>
 
-    <select id="selectArea" resultMap="areaMap">
+    <select id="selectAreas" resultMap="areaMap">
         SELECT id,name,fullname,shortname,code,lookup,parent,ancestors,depth,category,status,ordered,remarks,deleted,
         created_by,created_at,last_modified_by,last_modified_at,version
         FROM area where deleted=0
-        <if test="areaDto.name!=null">and name=#{areaDto.name}</if>
-        <if test="areaDto.fullname!=null">and fullname=#{areaDto.fullname}</if>
-        <if test="areaDto.code!=null">and code=#{areaDto.code}</if>
-        <if test="areaDto.lookup!=null">and lookup=#{areaDto.lookup}</if>
-        <if test="areaDto.parent!=null">and parent=#{areaDto.parent}</if>
+        <if test="name!=null">and name LIKE '%${name}%'</if>
+        <if test="fullname!=null">and fullname=#{fullname}</if>
+        <if test="code!=null">and code=#{code}</if>
+        <if test="lookup!=null">and lookup=#{lookup}</if>
+        <if test="parent!=null">and parent=#{parent}</if>
     </select>
 
     <select id="selectAll" resultMap="areaMap">
         SELECT id,name,fullname,shortname,code,lookup,parent,ancestors,depth,category,status,ordered,remarks,deleted,
         created_by,created_at,last_modified_by,last_modified_at,version
-        FROM area where deleted=0;
+        FROM area where deleted=0 ;
+    </select>
+
+    <select id="selectAreasByDepth" resultMap="areaMap">
+        SELECT id,name,fullname,shortname,code,lookup,parent,ancestors,depth,category,status,ordered,remarks,deleted,
+        created_by,created_at,last_modified_by,last_modified_at,version
+        FROM area where deleted=0 and depth=#{depth} ORDER BY ordered;
     </select>
 
 </mapper>

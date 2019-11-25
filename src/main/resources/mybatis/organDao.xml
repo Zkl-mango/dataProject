@@ -84,7 +84,7 @@
     <select id="selectOrganListByParent" resultMap="organMap">
         SELECT id,name,fullname,code,area_code,parent,ancestors,depth,category,status,ordered,remarks,deleted,
         created_by,created_at,last_modified_by,last_modified_at,version
-        FROM organ where parent=#{parent} and deleted=0;
+        FROM organ where parent=#{parent} and deleted=0 ORDER BY ordered;
     </select>
 
     <select id="selectOrganListByArea" resultMap="organMap">
@@ -93,16 +93,16 @@
         FROM organ where area_code=#{areaCode} and deleted=0;
     </select>
 
-    <select id="selectOrgan" resultMap="organMap">
+    <select id="selectOrgans" resultMap="organMap">
         SELECT id,name,fullname,code,area_code,parent,ancestors,depth,category,status,ordered,remarks,deleted,
         created_by,created_at,last_modified_by,last_modified_at,version
         FROM organ
         WHERE deleted=0
-        <if test="organsParamDto.name!=null">and name=#{organsParamDto.name}</if>
-        <if test="organsParamDto.fullname!=null">and fullname=#{organsParamDto.fullname}</if>
-        <if test="organsParamDto.code!=null">and code=#{organsParamDto.code}</if>
-        <if test="organsParamDto.parent!=null">and parent=#{organsParamDto.parent}</if>
-        <if test="organsParamDto.areaCode!=null">and area_code=#{organsParamDto.areaCode}</if>
+        <if test="name!=null">and name LIKE '%${name}%'</if>
+        <if test="fullname!=null">and fullname=#{fullname}</if>
+        <if test="code!=null">and code=#{code}</if>
+        <if test="parent!=null">and parent=#{parent}</if>
+        <if test="areaCode!=null">and area_code=#{areaCode}</if>
     </select>
 
 </mapper>

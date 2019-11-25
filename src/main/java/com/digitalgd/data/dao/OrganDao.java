@@ -27,6 +27,6 @@ public interface OrganDao {
 
     public List<OrganEntity> selectOrganListByArea(String areaCode);
 
-    public IPage<OrganEntity> selectOrgan(Page<OrganEntity> page, OrgansParamDto organsParamDto);
+    public List<OrganEntity> selectOrgans(OrgansParamDto organsParamDto);
 
 }

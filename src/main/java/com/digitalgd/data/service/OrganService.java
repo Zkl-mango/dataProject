@@ -29,5 +29,5 @@ public interface OrganService {
 
     public List<OrganEntity> getOrganListByArea(String areaName);
 
-    public IPage<OrganEntity> getOrgan(Page<OrganEntity> page, OrgansParamDto organsParamDto);
+    public List<OrganEntity> getOrgans(OrgansParamDto organsParamDto,List<OrganEntity> list);
 }

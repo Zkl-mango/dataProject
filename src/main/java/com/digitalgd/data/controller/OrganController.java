@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,12 +70,19 @@ public class OrganController {
         return ResponseEntity.status(HttpStatus.OK).body(organEntity);
     }
 
+//    @GetMapping ("organs")
+//    public ResponseEntity<IPage<OrganEntity>> getOrgansByIPage(OrgansParamDto organsParamDto, PageInfo pageInfo) {
+//        Page<OrganEntity> page = new Page<>();
+//        page.setSize(pageInfo.getPageSize());
+//        page.setCurrent(pageInfo.getCurrent());
+//        IPage<OrganEntity> organs = organService.getOrgan(page,organsParamDto);
+//        return ResponseEntity.status(HttpStatus.OK).body(organs);
+//    }
+
     @GetMapping ("organs")
-    public ResponseEntity<IPage<OrganEntity>> getOrgansByIPage(OrgansParamDto organsParamDto, PageInfo pageInfo) {
-        Page<OrganEntity> page = new Page<>();
-        page.setSize(pageInfo.getPageSize());
-        page.setCurrent(pageInfo.getCurrent());
-        IPage<OrganEntity> organs = organService.getOrgan(page,organsParamDto);
-        return ResponseEntity.status(HttpStatus.OK).body(organs);
+    public ResponseEntity<List<OrganEntity>> getOrgansByIPage(OrgansParamDto organsParamDto) {
+        List<OrganEntity> list = new ArrayList<>();
+        list = organService.getOrgans(organsParamDto,list);
+        return ResponseEntity.status(HttpStatus.OK).body(list);
     }
 }

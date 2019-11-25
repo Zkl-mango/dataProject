@@ -64,5 +64,7 @@ public interface AreaDao extends BaseMapper<AreaEntity> {
 
     public List<AreaEntity> selectAll();
 
-    IPage<AreaEntity> selectArea(Page page, AreaDto areaDto);
+    List<AreaEntity> selectAreas(AreaDto areaDto);
+
+    public List<AreaEntity> selectAreasByDepth(int depth);
 }

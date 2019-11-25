@@ -5,18 +5,18 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.digitalgd.data.dto.AreaDto;
 import com.digitalgd.data.dto.PageInfo;
 import com.digitalgd.data.entity.AreaEntity;
-import com.digitalgd.data.exceptions.ListNotFoundException;
 import com.digitalgd.data.service.AreaService;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 import com.digitalgd.data.exceptions.EntityNotFoundException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -66,17 +66,24 @@ public class AreaControlller {
         return ResponseEntity.status(HttpStatus.OK).body(areaEntity);
     }
 
+//    @GetMapping("areas")
+//    public ResponseEntity<IPage<AreaEntity>> getAreas(AreaDto areaDto, PageInfo pageInfo) {
+//        Page<AreaEntity> page = new Page<>();
+//        if( pageInfo.getCurrent()==0 ) {
+//            pageInfo.setCurrent(1);
+//            pageInfo.setPageSize(20);
+//        }
+//        page.setSize(pageInfo.getPageSize());
+//        page.setCurrent(pageInfo.getCurrent());
+//        IPage<AreaEntity> areas = areaService.getArea(page,areaDto);
+//        return ResponseEntity.status(HttpStatus.OK).body(areas);
+//    }
+
     @GetMapping("areas")
-    public ResponseEntity<IPage<AreaEntity>> getAreas(AreaDto areaDto, PageInfo pageInfo) {
-        Page<AreaEntity> page = new Page<>();
-        if( pageInfo.getCurrent()==0 ) {
-            pageInfo.setCurrent(1);
-            pageInfo.setPageSize(20);
-        }
-        page.setSize(pageInfo.getPageSize());
-        page.setCurrent(pageInfo.getCurrent());
-        IPage<AreaEntity> areas = areaService.getArea(page,areaDto);
-        return ResponseEntity.status(HttpStatus.OK).body(areas);
+    public ResponseEntity<List<AreaEntity>> getAreas(AreaDto areaDto) {
+        List<AreaEntity> list = new ArrayList<>();
+        list = areaService.getAreas(areaDto,list);
+        return ResponseEntity.status(HttpStatus.OK).body(list);
     }
 
 }

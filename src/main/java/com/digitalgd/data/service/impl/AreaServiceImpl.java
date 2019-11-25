@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -37,11 +38,7 @@ public class AreaServiceImpl implements AreaService {
         areaEntity.setId(UUID.randomUUID().toString());
         areaEntity.setAncestors(res);
         areaEntity.setDepth(s.length);
-        areaEntity.setVersion(1);
-        areaEntity.setDeleted(0);
         areaEntity.setStatus(1);
-        areaEntity.setCreatedAt(new Date());
-        areaEntity.setCreatedBy(null);
         areaDao.insertArea(areaEntity);
     }
 
@@ -51,8 +48,6 @@ public class AreaServiceImpl implements AreaService {
         if(area==null) {
             throw new EntityNotFoundException(String.format("Area not found"));
         }
-        areaEntity.setLastModifiedAt(new Date());
-        areaEntity.setLastModifiedBy(user);
         areaEntity.setVersion(area.getVersion() + 1);
         areaDao.updateArea(areaEntity);
     }
@@ -127,12 +122,12 @@ public class AreaServiceImpl implements AreaService {
         return list;
     }
 
-    @Override
-    public IPage<AreaEntity> getArea(Page<AreaEntity> page, AreaDto areaDto) {
-        if(StringUtils.isBlank(areaDto.getName()))
-            areaDto.setName(null);
-        return areaDao.selectArea(page,areaDto);
-    }
 
+    @Override
+    public List<AreaEntity> getAreas(AreaDto areaDto,List<AreaEntity> list) {
+//        list = areaDao.selectAreaByParents(parent);
+        list = areaDao.selectAreas(areaDto);
+        return list;
+    }
 
 }

@@ -1,5 +1,7 @@
 package com.digitalgd.data.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -27,13 +29,24 @@ public class OrganEntity implements Serializable {
     private int status;
     private int ordered;
     private String remarks;
+    @TableField(value="deleted",fill = FieldFill.INSERT)
     private int deleted;
+
+    @TableField(value="created_by",fill = FieldFill.INSERT)
     private String createdBy;
+
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
+    @TableField(value="created_at",fill = FieldFill.INSERT)
     private Date createdAt;
+
+    @TableField(value="last_modified_by",fill = FieldFill.INSERT_UPDATE)
     private String lastModifiedBy;
+
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
+    @TableField(value="last_modified_at",fill = FieldFill.INSERT_UPDATE)
     private Date lastModifiedAt;
+
+    @TableField(value="version",fill = FieldFill.INSERT)
     private int version;
 
     public String getId() {

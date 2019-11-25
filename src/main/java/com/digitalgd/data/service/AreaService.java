@@ -46,6 +46,6 @@ public interface AreaService {
 
     public List<AreaEntity> getAll();
 
-    public IPage<AreaEntity> getArea(Page<AreaEntity> page, AreaDto areaDto);
+    public List<AreaEntity> getAreas(AreaDto areaDto,List<AreaEntity> list);
 
 }

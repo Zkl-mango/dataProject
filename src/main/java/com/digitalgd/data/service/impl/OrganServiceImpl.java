@@ -39,11 +39,7 @@ public class OrganServiceImpl implements OrganService {
         String[] s = res.split(",");
         organEntity.setAncestors(res);
         organEntity.setDepth(s.length);
-        organEntity.setVersion(1);
-        organEntity.setDeleted(0);
         organEntity.setStatus(1);
-        organEntity.setCreatedAt(new Date());
-        organEntity.setCreatedBy(null);
         organEntity.setId(UUID.randomUUID().toString());
         organDao.insertOrgan(organEntity);
     }
@@ -54,8 +50,8 @@ public class OrganServiceImpl implements OrganService {
         if (organ == null) {
             throw new EntityNotFoundException(String.format("Organ(id={0}) not found", organEntity.getId()));
         }
-        organEntity.setLastModifiedAt(new Date());
-        organEntity.setLastModifiedBy(user);
+//        organEntity.setLastModifiedAt(new Date());
+//        organEntity.setLastModifiedBy(user);
         organEntity.setVersion(organEntity.getVersion()+1);
         organDao.updateOrgan(organEntity);
     }
@@ -122,22 +118,9 @@ public class OrganServiceImpl implements OrganService {
     }
 
     @Override
-    public IPage<OrganEntity> getOrgan(Page<OrganEntity> page, OrgansParamDto organsParamDto) {
-        if( !StringUtils.isBlank(organsParamDto.getAreasName()) ) {
-            AreaEntity area = areaDao.selectAreaByName(organsParamDto.getAreasName());
-            if(area==null) {
-                return null;
-            }
-            organsParamDto.setAreaCode(area.getCode());
-        }
-        if( !StringUtils.isBlank(organsParamDto.getParent()) ) {
-            String parentName = organsParamDto.getParent();
-            OrganEntity organEntity = organDao.selectOrganByName(parentName);
-            if(organEntity==null) {
-                return null;
-            }
-            organsParamDto.setParent(organEntity.getCode());
-        }
-        return organDao.selectOrgan(page,organsParamDto);
+    public List<OrganEntity> getOrgans(OrgansParamDto organsParamDto,List<OrganEntity> list){
+        list = organDao.selectOrgans(organsParamDto);
+        return list;
     }
+
 }
